@@ -4,7 +4,7 @@ const fetchWeatherData = (function () {
   const init = async (city = "Paris", unitGroup = "metric") => {
     const safeGetWeatherData = withErrorHandling(getWeatherData);
     const result = await safeGetWeatherData(city, unitGroup);
-    return result.success ? result.data : result.error;
+    return result;
   };
 
   async function getWeatherData(city, unitGroup) {
@@ -35,7 +35,6 @@ const fetchWeatherData = (function () {
         return {
           success: false,
           error: error.message,
-          timestamp: new Date(),
         };
       }
     };
@@ -44,5 +43,5 @@ const fetchWeatherData = (function () {
   return { init };
 })();
 
-const results = fetchWeatherData.init();
+const results = await fetchWeatherData.init();
 console.log(results);
