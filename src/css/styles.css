@@ -88,6 +88,7 @@ body {
   background-image: url("../assets/background.jpg");
   background-size: cover;
   background-position: center;
+  line-height: 1;
 }
 
 /* Header */
@@ -127,6 +128,66 @@ input::placeholder {
 .weather-info {
   background-color: transparent;
   height: 85vh;
+  padding: var(--spacing-l);
+  display: grid;
+  grid: auto auto 1fr 1fr 1fr / 1fr 4fr;
+  grid-template-areas:
+    "description description"
+    "location location"
+    "temperature meta"
+    "temperature meta"
+    "temperature meta";
+}
+
+.unit-wrapper {
+  display: flex;
+}
+
+p {
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.location {
+  font-size: calc(1.8rem + 1vh);
+  font-weight: bold;
+  grid-area: location;
+}
+
+.description {
+  font-size: calc(1rem + 1vh);
+  grid-area: description;
+}
+
+.unit-wrapper.temp {
+  grid-area: temperature;
+  justify-self: start;
+  align-self: center;
+}
+
+.temperature {
+  font-size: 28vh;
+}
+
+.temp-unit {
+  font-weight: bold;
+  font-size: calc(2rem + 1vw);
+}
+
+.feels-like-unit {
+  font-size: calc(0.3rem + 1vh);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  grid-area: meta;
+  justify-self: start;
+  align-self: center;
+  gap: 1.5rem;
+  font-size: calc(0.7rem + 1vh);
+  padding-left: 2rem;
 }
 
 /* Footer */
