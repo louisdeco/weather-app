@@ -27,23 +27,19 @@ const displayHandler = (function () {
       currentConditions: { temp, conditions, feelslike, humidity, windspeed },
     } = results;
 
-    const descriptionDom = document.querySelector(".description");
-    const locationDom = document.querySelector(".location");
-    const tempDom = document.querySelector(".temperature");
-    const tempUnitDom = document.querySelector(".temp-unit");
-    const feelsLikeDom = document.querySelector(".feels-like");
-    const feelsLikeUnitDom = document.querySelector(".feels-like-unit");
-    const windDom = document.querySelector(".wind");
-    const humidityDom = document.querySelector(".humidity");
+    updateElement(".description", conditions);
+    updateElement(".location", resolvedAddress);
+    updateElement(".temperature", temp);
+    updateElement(".temp-unit", unit[unitGroup].temperature);
+    updateElement(".feels-like", `FEELS LIKE ${feelslike}`);
+    updateElement(".feels-like-unit", unit[unitGroup].temperature);
+    updateElement(".wind", `WIND: ${windspeed} ${unit[unitGroup].wind}`);
+    updateElement(".humidity", `HUMIDITY: ${humidity}%`);
+  }
 
-    descriptionDom.textContent = conditions;
-    locationDom.textContent = resolvedAddress;
-    tempDom.textContent = temp;
-    tempUnitDom.textContent = unit[unitGroup].temperature;
-    feelsLikeDom.textContent = `FEELS LIKE ${feelslike}`;
-    feelsLikeUnitDom.textContent = unit[unitGroup].temperature;
-    windDom.textContent = `WIND: ${windspeed} ${unit[unitGroup].wind}`;
-    humidityDom.textContent = `HUMIDITY: ${humidity}%`;
+  function updateElement(selector, content) {
+    const element = document.querySelector(selector);
+    if (element) element.textContent = content;
   }
 
   function displayError(errorMessage) {
