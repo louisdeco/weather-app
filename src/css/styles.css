@@ -148,10 +148,14 @@ input::placeholder {
 }
 
 /* Main */
-.weather-info {
-  background-color: transparent;
+.weather-info,
+.error {
   height: 85vh;
-  padding: var(--spacing-l);
+  margin: var(--spacing-l);
+  background-color: transparent;
+}
+
+.weather-info {
   display: grid;
   grid: auto auto 1fr 1fr 1fr / 1fr 4fr;
   grid-template-areas:
@@ -211,6 +215,19 @@ p {
   gap: 1.5rem;
   font-size: calc(0.7rem + 1vh);
   padding-left: 2rem;
+}
+
+.error {
+  display: flex;
+  color: white;
+  font-size: calc(1.5rem + 1vh);
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-displayed {
+  display: none;
 }
 
 /* Footer */
