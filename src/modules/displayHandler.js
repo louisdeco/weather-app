@@ -10,7 +10,7 @@ const displayHandler = (function () {
     }
   };
 
-  function displayWeatherData(results) {
+  function displayWeatherData(results, unitGroup = "metric") {
     const unit = {
       metric: {
         wind: "KM/H",
@@ -39,10 +39,10 @@ const displayHandler = (function () {
     descriptionDom.textContent = conditions;
     locationDom.textContent = resolvedAddress;
     tempDom.textContent = temp;
-    tempUnitDom.textContent = unit.metric.temperature;
+    tempUnitDom.textContent = unit[unitGroup].temperature;
     feelsLikeDom.textContent = `FEELS LIKE ${feelslike}`;
-    feelsLikeUnitDom.textContent = unit.us.temperature;
-    windDom.textContent = `WIND: ${windspeed} ${unit.metric.wind}`;
+    feelsLikeUnitDom.textContent = unit[unitGroup].temperature;
+    windDom.textContent = `WIND: ${windspeed} ${unit[unitGroup].wind}`;
     humidityDom.textContent = `HUMIDITY: ${humidity}%`;
   }
 
@@ -50,7 +50,7 @@ const displayHandler = (function () {
     console.log(errorMessage);
   }
 
-  return { init, displayWeatherData };
+  return { init, displayWeatherData, displayError };
 })();
 
 export default displayHandler;

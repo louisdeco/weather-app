@@ -2,29 +2,54 @@ import fetchWeatherData from "./fetchWeatherData.js";
 import displayHandler from "./displayHandler.js";
 
 const domInteractivity = (function () {
+  let currentUnit = "metric";
+
   const init = () => {
     searchCity();
+    toggleUnit();
   };
 
   async function searchCity() {
     const searchForm = document.querySelector("#weatherForm");
-    const cityInput = document.querySelector("#cityInput");
     searchForm.addEventListener("keypress", async (event) => {
       if (event.key == "Enter") {
         event.preventDefault();
-        const city = cityInput.value.trim();
-        const results = await fetchWeatherData.init(city || "Paris", "metric");
-        console.log(results);
-        if (results.success) {
-          displayHandler.displayWeatherData(results.data);
-        } else {
-          displayHandler.displayError(results.error);
-        }
+        updateWeatherDisplay();
       }
     });
   }
 
-  return { init };
+  function toggleUnit() {
+    const toggleButton = document.querySelector("#unitToggle");
+    toggleButton.addEventListener("click", async () => {
+      currentUnit = currentUnit === "metric" ? "us" : "metric";
+      toggleUnitIcon();
+      await updateWeatherDisplay();
+    });
+  }
+
+  function toggleUnitIcon() {
+    document.querySelector(".toggle-icon-on").classList.toggle("hidden");
+    document.querySelector(".toggle-icon-off").classList.toggle("hidden");
+  }
+
+  async function updateWeatherDisplay() {
+    const city = getCurrentCity();
+    const results = await fetchWeatherData.init(city, currentUnit);
+    console.log(results);
+    if (results.success) {
+      displayHandler.displayWeatherData(results.data, currentUnit);
+    } else {
+      displayHandler.displayError(results.error);
+    }
+  }
+
+  function getCurrentCity() {
+    const cityInput = document.querySelector("#cityInput");
+    return cityInput.value.trim() || "Paris";
+  }
+
+  return { init, currentUnit };
 })();
 
 export default domInteractivity;
