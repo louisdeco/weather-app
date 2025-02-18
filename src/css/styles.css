@@ -261,4 +261,17 @@ p {
 footer {
   background-color: transparent;
   height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p,
+footer a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+footer a:hover {
+  color: white;
+  transition: color 0.2 ease;
 }
