@@ -34,9 +34,9 @@ const domInteractivity = (function () {
   }
 
   async function updateWeatherDisplay() {
+    displayHandler.setDisplayState(displayHandler.DOM.loading);
     const city = getCurrentCity();
     const results = await fetchWeatherData.init(city, currentUnit);
-    console.log(results);
     if (results.success) {
       displayHandler.displayWeatherData(results.data, currentUnit);
     } else {

@@ -1,8 +1,14 @@
 import fetchWeatherData from "./fetchWeatherData.js";
 
 const displayHandler = (function () {
+  const DOM = {
+    error: document.querySelector(".error"),
+    weather: document.querySelector(".weather-info"),
+    loading: document.querySelector(".loading"),
+  };
+
   const init = async () => {
-    initializeDisplay();
+    setDisplayState(DOM.loading);
     const results = await fetchWeatherData.init();
     if (results.success) {
       displayWeatherData(results.data);
@@ -11,7 +17,15 @@ const displayHandler = (function () {
     }
   };
 
+  function setDisplayState(elementToShow) {
+    const elements = [DOM.error, DOM.weather, DOM.loading];
+    elements.forEach((element) => {
+      element.classList.toggle("not-displayed", element !== elementToShow);
+    });
+  }
+
   function displayWeatherData(results, unitGroup = "metric") {
+    setDisplayState(DOM.weather);
     const unit = {
       metric: {
         wind: "KM/H",
@@ -44,23 +58,11 @@ const displayHandler = (function () {
   }
 
   function displayError(errorMessage) {
-    const errorDom = document.querySelector(".error");
-    const weatherDisplayDom = document.querySelector(".weather-info");
-
-    errorDom.textContent = errorMessage;
-    errorDom.classList.remove("not-displayed");
-    weatherDisplayDom.classList.add("not-displayed");
+    setDisplayState(DOM.error);
+    DOM.error.textContent = errorMessage;
   }
 
-  function initializeDisplay() {
-    const errorDom = document.querySelector(".error");
-    const weatherDisplayDom = document.querySelector(".weather-info");
-
-    errorDom.classList.add("not-displayed");
-    weatherDisplayDom.classList.remove("not-displayed");
-  }
-
-  return { init, displayWeatherData, displayError };
+  return { init, displayWeatherData, displayError, setDisplayState, DOM };
 })();
 
 export default displayHandler;

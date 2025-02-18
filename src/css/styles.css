@@ -149,6 +149,7 @@ input::placeholder {
 
 /* Main */
 .weather-info,
+.loading,
 .error {
   height: 85vh;
   margin: var(--spacing-l);
@@ -228,6 +229,32 @@ p {
 
 .not-displayed {
   display: none;
+}
+
+.loading.not-displayed {
+  display: none !important;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  animation: spin 1s ease-in-out infinite;
+  height: 28vh;
+  width: 28vh;
+}
+
+.spinner-icon {
+  height: 28vh;
+  width: 28vh;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Footer */
